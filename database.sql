@@ -1,3 +1,4 @@
+--psql -U postgres -h localhost -W
 CREATE DATABASE budget_database;
 --\l to see databases
 --\c into database
@@ -27,14 +28,13 @@ CREATE TABLE group_user(
     CONSTRAINT fk_groupid FOREIGN KEY(groupId) REFERENCES groups(group_id)
 
  );
-
- 
 CREATE TABLE expense_user(
     user_id int,
     expense_id int,
     CONSTRAINT fk_userid FOREIGN KEY(user_id) REFERENCES users(user_id),
     CONSTRAINT fk_expenseid FOREIGN KEY(expense_id) REFERENCES expenses(expense_id)
 );
+
 ALTER TABLE  expenses ADD COLUMN group_id INTEGER;
 ALTER TABLE expenses ADD CONSTRAINT fk_groupid FOREIGN KEY (group_id) REFERENCES groups(group_id);
 
