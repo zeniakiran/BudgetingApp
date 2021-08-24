@@ -3,6 +3,7 @@ var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require('cookie-parser');
 var app = express();
+
 const server = require("http").createServer(app);
 const Sequelize = require('sequelize')
 var usersRouter = require('./routes/users');
