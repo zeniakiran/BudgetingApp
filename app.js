@@ -3,10 +3,15 @@ var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require('cookie-parser');
 var app = express();
+
 const server = require("http").createServer(app);
 const Sequelize = require('sequelize')
 var usersRouter = require('./routes/users');
 
+console.log(" from branch zenia")
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
 app.get('/', (req, res) => res.json({ message: 'Hello World' }))
 
