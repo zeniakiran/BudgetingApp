@@ -6,7 +6,8 @@ var app = express();
 const server = require("http").createServer(app);
 const Sequelize = require('sequelize')
 var usersRouter = require('./routes/users');
-
+const db = require("./db/models");
+db.sequelize.sync();
 
 app.get('/', (req, res) => res.json({ message: 'Hello World' }))
 
