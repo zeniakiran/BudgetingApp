@@ -7,11 +7,8 @@ var app = express();
 const server = require("http").createServer(app);
 const Sequelize = require('sequelize')
 var usersRouter = require('./routes/users');
-
-console.log(" from branch zenia")
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+const db = require("./db/models");
+db.sequelize.sync();
 
 app.get('/', (req, res) => res.json({ message: 'Hello World' }))
 
