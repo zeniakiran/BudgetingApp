@@ -6,7 +6,11 @@ var app = express();
 
 const server = require("http").createServer(app);
 const Sequelize = require('sequelize')
-var usersRouter = require('./routes/users');
+
+// Routers
+const usersRouter = require('./routes/users');
+const groupsRouter = require('./routes/groups');
+const expensesRouter = require('./routes/expenses');
 const db = require("./db/models");
 db.sequelize.sync();
 
@@ -16,7 +20,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+// defining routes
+
 app.use('/api/users', usersRouter);
+app.use('/api/groups', groupsRouter);
+app.use('/api/expenses', expensesRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next){
   next(createError(404));
@@ -24,12 +34,14 @@ app.use(function (req, res, next){
 
 const port = process.env.PORT || 5000; 
 
-
+// Database connection string
 const sequelize = new Sequelize(process.env.DB_NAME, 'postgres', process.env.PASSWORD, {
   host: "localhost",
   port: process.env.DB_PORT,
   dialect: 'postgres',
 })
+
+// connecting database
 sequelize.authenticate()
 .then(() => {
 console.log('Connection has been established successfully.');
