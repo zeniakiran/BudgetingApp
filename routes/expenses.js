@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
-const Group  = require("../db/models").Expense
+const Expense  = require("../db/models").Expense
+const { expenseValidation} = require("../middlewares/validateExpense")
 
 /* GET users listing. */
-router.post('/', async(req,res)=> {
+router.post('/',expenseValidation, async(req,res)=> {
   try{
     console.log(req)
-    const result = await Expense.create({name : req.body.name})
+    const result = await Expense.create({amount : req.body.amount, type: req.body.type,
+    description: req.body.description, created_by: req.body.created_by,
+    group_id: req.body.group_id})
     return res.status(200).send("Expense added successfully")
   }
   catch(err){

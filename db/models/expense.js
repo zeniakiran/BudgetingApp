@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const Joi = require("joi");
 module.exports = (sequelize, DataTypes) => {
   class Expense extends Model {
     /**
@@ -12,9 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Expense.belongsToMany(models.User, {
-        through : 'user_expense',
+        through : 'user_expenses',
         foreignKey: 'expId',
-      })
+      }),
+      Expense.belongsTo(models.Group, {
+        foreignKey: "group_id",
+        as: "expense",
+      });
     }
   };
   Expense.init({
@@ -29,3 +34,14 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Expense;
 };
+function validateExpense(data) {
+  const schema = Joi.object({
+    amount: Joi.number().integer().min(10).max(100000).required(),
+    type: Joi.string().required(),
+    created_by: Joi.number().integer().required(),
+    group_id: Joi.number().integer().required(),
+  });
+  return schema.validate(data, { abortEarly: false });
+}
+
+module.exports.validateExpense = validateExpense;

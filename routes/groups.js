@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const Group  = require("../db/models").Group
+const { groupValidation } = require("../middlewares/validateGroup")
 
 /* GET users listing. */
-router.post('/', async(req,res)=> {
+router.post('/',groupValidation, async(req,res)=> {
   try{
-    console.log(req)
     const result = await Group.create({name : req.body.name})
     return res.status(200).send("Group created successfully")
   }
